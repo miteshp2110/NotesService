@@ -1,9 +1,23 @@
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure
-
+import os
 def connect_db():
+
     try:
-        client= MongoClient("mongodb://root:root@localhost:27017/")
+
+        mongo_host=os.getenv('MONGO_HOST')
+        mongo_username=os.getenv('MONGO_USERNAME')
+        mongo_password=os.getenv('MONGO_PASSWORD')
+        # print(mongo_host,mongo_username,mongo_password)
+
+        url="mongodb://"+mongo_username+":"+mongo_password+"@"+mongo_host+":27017/"
+
+        # print(url)
+
+        
+
+
+        client= MongoClient(url)
         client.admin.command('ping')
         print("DB Connected")
         db=client['NoteService']

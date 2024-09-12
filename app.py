@@ -2,12 +2,11 @@ from flask import Flask,Request,jsonify,request
 from services.validateToken import verifyToken
 from services.databaseService import connect_db
 import json
-from controllers.createUser import createUserSchema
 from controllers.addNotes import insertNote
 from controllers.getNotes import getAllNotes
 from controllers.updateNotes import updateNoteWithId
 from controllers.deleteNote import deleteNoteWithId
-
+import os
 
 
 
@@ -114,36 +113,6 @@ def updateNote():
        
    return tokenStatus
 
-@app.route('/createUser',methods=['POST'])
-def createUser():
-   header=(request.headers.get('Authorization'))
-   if not header:
-       return {"error":"No Token Provided"},400
-   token=header.split(" ")[1]
-   tokenStatus=verifyToken(token)
-   if(tokenStatus==200):
-       try:
-        body=request.data
-        if(not body):
-            return jsonify({"error":"No Body Provided"}),400
-        body=json.loads(body.decode())
-        email=body.get('email')
-        if not email:
-           return jsonify({"Error":"Email not Provided"}),400
-        # print(body.get('email'))
-
-        createStatus=createUserSchema(email,collection)
-
-        if(createStatus == True):
-           return jsonify({"Success":"User Created Successfully"}),201
-        else:
-           return createStatus,403
-        
-       except Exception as e:
-        print("error occures: ",e)
-        return jsonify({"error":"Some Error Occured"}),500
-   return 
-
 
 
 
@@ -151,4 +120,4 @@ def createUser():
 
 if __name__=="__main__":
     
-    app.run(port=3000,debug=True)
+    app.run(debug=True)
