@@ -5,6 +5,9 @@ def connect_db():
 
     try:
 
+        # mongo_host='localhost'
+        # mongo_username='root'
+        # mongo_password='root'
         mongo_host=os.getenv('MONGO_HOST')
         mongo_username=os.getenv('MONGO_USERNAME')
         mongo_password=os.getenv('MONGO_PASSWORD')

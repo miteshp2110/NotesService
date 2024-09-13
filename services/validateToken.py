@@ -1,7 +1,8 @@
 import jwt
 from jwt.exceptions import ExpiredSignatureError,InvalidTokenError
+import os
 
-JWT_SECRET_KEY = "SampleSeceretKey"
+JWT_SECRET_KEY = os.getenv('JWT_SECRET')
 
 def verifyToken(token):
     if not token:
