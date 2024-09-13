@@ -2,13 +2,15 @@ import jwt
 from jwt.exceptions import ExpiredSignatureError,InvalidTokenError
 import os
 
-JWT_SECRET_KEY = os.getenv('JWT_SECRET')
+secretKey = str(os.getenv('JWT_SECRET'))
 
 def verifyToken(token):
+    token=str(token)
+    # print(secretKey)
     if not token:
         return {"error":"No Token Provided"}
     try:
-        decoded=jwt.decode(token,JWT_SECRET_KEY,"HS256")
+        decoded_token = jwt.decode(token, secretKey, algorithms=['HS256'])
         # print(decoded)
         return 200
     except ExpiredSignatureError:
